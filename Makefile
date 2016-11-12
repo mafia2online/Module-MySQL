@@ -1,15 +1,20 @@
+NAME= m2online-mysql
+OUTF= m2online-mysql.so
 CC = g++
 FLAGS = -m32 -shared -Wall -fPIC -I./ `mysql_config --libs --include`
 
-OUTFILE = m2online-mysql.so
-
 SRC = $(wildcard ./*.cpp ./SDK/*.cpp)
 
-all: m2online-mysql
+all: $(NAME)
 
-m2online-mysql:
-	$(CC) $(FLAGS) -o $(OUTFILE) $(SRC)
+$(NAME):
+	$(CC) $(FLAGS) -o $(OUTF) $(SRC)
 	strip --strip-unneeded $(OUTFILE)
 
 clean:
 	rm -f $(OBJ)
+
+fclean:
+	rm -f $(OUTF)
+
+re: clean fclean $(NAME)
