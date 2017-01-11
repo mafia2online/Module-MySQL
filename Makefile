@@ -9,7 +9,7 @@ all: $(NAME)
 
 $(NAME):
 	$(CC) $(FLAGS) -o $(OUTF) $(SRC)
-	strip --strip-unneeded $(OUTFILE)
+	strip --strip-unneeded $(OUTF)
 
 clean:
 	rm -f $(OBJ)
