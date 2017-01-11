@@ -1,20 +1,38 @@
-NAME= m2online-mysql
-OUTF= m2online-mysql.so
-CC = g++
-FLAGS = -m32 -shared -Wall -fPIC -I./ `mysql_config --libs --include`
+#
+## Makefile compilation for M2Online MySQL Module
+## Author : Tyldar
+#
 
-SRC = $(wildcard ./*.cpp ./SDK/*.cpp ./MySQL/*.cpp)
+CC	= g++
+
+RM	= rm -rf
+
+LDFLAGS	+= 
+
+CFLAGS	+= -I./ `mysql_config --cflags` `mysql_config --libs`
+
+CUSTOMF	+= -m32 -shared -Wall -fPIC -fpermissive
+CXXFLAGS += $(CUSTOMF)
+FLAGS	+= $(CUSTOMF)
+
+SRCS	:= $(wildcard ./*.cpp ./SDK/*.cpp ./MySQL/*.cpp)
+
+OBJS	:= $(SRCS:.cpp=.o)
+
+NAME	:= m2online-mysql.so
 
 all: $(NAME)
 
-$(NAME):
-	$(CC) $(FLAGS) -o $(OUTF) $(SRC)
-	strip --strip-unneeded $(OUTF)
+$(NAME): $(OBJS)
+	$(CC) $(FLAGS) -o $(NAME) $(OBJS) $(LDFLAGS)
+	strip --strip-unneeded $(NAME)
 
 clean:
-	rm -f $(OBJ)
+	$(RM) $(OBJS)
 
-fclean:
-	rm -f $(OUTF)
+fclean: clean
+	$(RM) $(NAME)
 
-re: clean fclean $(NAME)
+re: fclean all
+
+.PHONY: all re clean fclean
