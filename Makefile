@@ -3,7 +3,7 @@ OUTF= m2online-mysql.so
 CC = g++
 FLAGS = -m32 -shared -Wall -fPIC -I./ `mysql_config --libs --include`
 
-SRC = $(wildcard ./*.cpp ./SDK/*.cpp)
+SRC = $(wildcard ./*.cpp ./SDK/*.cpp ./MySQL/*.cpp)
 
 all: $(NAME)
 
